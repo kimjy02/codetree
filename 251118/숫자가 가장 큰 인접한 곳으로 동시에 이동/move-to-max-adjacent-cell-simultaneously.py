@@ -25,17 +25,15 @@ while True:
 
         si, sj = marbles_dct[i]
 
-        max_value = value
-        temp_list = []
+        max_value = 0
+        max_move = (-1, -1)
         for di, dj in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             ni, nj = si + di, sj + dj
             if 0 <= ni < n and 0 <= nj < n:
                 if a[ni][nj] > max_value:
                     max_value = a[ni][nj]
-                    temp_list.append((ni, nj))
-        if temp_list:
-            max_i, max_j = temp_list[-1]
-            marbles_dct[i] = (max_i, max_j)
+                    max_move = (ni, nj)
+        marbles_dct[i] = max_move
 
     # 같은 위치의 값이 있는지 확인
     # 그러기 위해서 기존의 marbles_dct의 키, 밸류를 뒤집음
