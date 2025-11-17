@@ -39,11 +39,19 @@ while True:
     # 그러기 위해서 기존의 marbles_dct의 키, 밸류를 뒤집음
 
     grid_dct = {}
+    remove_list = set()
+
     for k, v in marbles_dct.items():
+        if k not in result:
+            continue
         if v in grid_dct:
-            result.remove(k)
-            result.remove(grid_dct[v])
+            # 이미 있던 놈(grid_dct[v])도 제거
+            remove_list.add(k)
+            remove_list.add(grid_dct[v])
         else:
             grid_dct[v] = k
+
+    # 3. 한 번에 제거
+    result = [x for x in result if x not in remove_list]
 
 print(len(result))
