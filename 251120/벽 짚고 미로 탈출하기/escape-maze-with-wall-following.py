@@ -18,15 +18,14 @@ visited = [[0] * N for _ in range(N)]
 visited[i][j] = 1
 
 # 사방이 벽인 경우 바로 코드 탈출
-blocked = True
+wall_cnt = 0
 for d in range(4):
     di, dj = move_dct[d]
     ni, nj = i + di, j + dj
     if 0 <= ni < N and 0 <= nj < N:
-        if grid[ni][nj] != "#":
-            blocked = False
-            break
-if blocked:
+        if grid[ni][nj] == "#":
+            wall_cnt += 1
+if wall_cnt == 4:
     print(-1)
     exit()
 
