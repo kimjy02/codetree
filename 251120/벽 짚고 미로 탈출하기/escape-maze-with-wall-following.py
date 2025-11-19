@@ -14,8 +14,8 @@ move_dct = {
 # 초기에는 무조건 오른쪽으로 이동
 move_idx = 1
 time = 0
-visited = [[0] * N for _ in range(N)]
-visited[i][j] = 1
+visited = set()
+visited.add((i, j, move_idx))
 
 # 사방이 벽인 경우 바로 코드 탈출
 wall_cnt = 0
@@ -49,10 +49,10 @@ while True:
             time += 1
             if 0 <= wi < N and 0 <= wj < N:
                 if grid[wi][wj] == "#": # 전진 + 이동 방향 유지
-                    if visited[ni][nj] == 1:
+                    if (ni, nj, move_idx) in visited:
                         time = -1
                         break
-                    visited[ni][nj] = 1
+                    visited.add((ni, nj, move_idx))
                     i, j = ni, nj
 
                 else: # 전진 + 이동 방향 시계 90 회전 + 전진
@@ -60,10 +60,10 @@ while True:
                     move_idx = (move_idx+1)%4
                     change_i, change_j = move_dct[move_idx]
                     ni, nj = ni + change_i, nj + change_j
-                    if visited[ni][nj] == 1:
+                    if (ni, nj, move_idx) in visited:
                         time = -1
                         break
-                    visited[ni][nj] = 1
+                    visited.add((ni, nj, move_idx))
                     i, j = ni, nj
 
 print(time)
